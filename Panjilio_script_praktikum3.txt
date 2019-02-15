@@ -1,0 +1,168 @@
+mysql> create database kuliah;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use kuliah;
+Database changed
+mysql> create table Mahasiswa
+    -> (Nim char(8) primary key,
+    -> Nama varchar (25) not null,
+    -> AlamatJalan varchar (200) null,
+    -> Kota varchar (25) not null,
+    -> KodePos char(8) null,
+    -> NoHp char(15) null,
+    -> JenisKelamin varchar(15) not null,
+    -> TanggalLahir date not null,
+    -> KodeDosen char(8) null);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> desc Mahasiswa;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| Nim          | char(8)      | NO   | PRI | NULL    |       |
+| Nama         | varchar(25)  | NO   |     | NULL    |       |
+| AlamatJalan  | varchar(200) | YES  |     | NULL    |       |
+| Kota         | varchar(25)  | NO   |     | NULL    |       |
+| KodePos      | char(8)      | YES  |     | NULL    |       |
+| NoHp         | char(15)     | YES  |     | NULL    |       |
+| JenisKelamin | varchar(15)  | NO   |     | NULL    |       |
+| TanggalLahir | date         | NO   |     | NULL    |       |
+| KodeDosen    | char(8)      | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+9 rows in set (0.03 sec)
+mysql> insert into Mahasiswa
+    -> (Nim, Nama, AlamatJalan,  Kota, KodePos, NoHp,  JenisKelamin, TanggalLahir, KodeDosen)
+    -> VALUES
+    -> ("11223344", "Ari Santoso","Jl. Kalimantan", "Bekasi","12345","08123456789", "Laki-Laki", "1998-10-12","1111"),
+    -> ("11223345", "Ario Talib"," Jl. Irian",  "Cikarang", "12346","08912332112", "Laki-Laki", "1999-11-16","1112"),
+    -> ("11223346", "Dina Marlina","Jl. Halmahera", "Karawang","12347", "08712332198", "Perempuan", "1997-12-01","1113"),
+    -> ("11223347", "Lisa Ayu","Jl. Jawa", "Bekasi","12345", "08765432112", "Perempuan", "1996-01-02","1114"),
+    -> ("11223348", "Tiara Wahidah","Jl. Kediri", "Bekasi","12345", "08912387634", "Perempuan", "1980-02-05","1115"),
+    -> ("11223349", "Anton Sinaga","Jl. Merauke", "Cikarang","12346", "08967812356", "Laki-Laki", "1988-03-10","1116");
+Query OK, 6 rows affected (0.07 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+mysql> select * from mahasiswa;
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama          | AlamatJalan    | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso   | Jl. Kalimantan | Bekasi   | 12345   | 08123456789 | Laki-Laki    | 1998-10-12   | 1111      |
+| 11223345 | Ario Talib    | Jl. Irian      | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
+| 11223346 | Dina Marlina  | Jl. Halmahera  | Karawang | 12347   | 08712332198 | Perempuan    | 1997-12-01   | 1113      |
+| 11223347 | Lisa Ayu      | Jl. Jawa       | Bekasi   | 12345   | 08765432112 | Perempuan    | 1996-01-02   | 1114      |
+| 11223348 | Tiara Wahidah | Jl. Kediri     | Bekasi   | 12345   | 08912387634 | Perempuan    | 1980-02-05   | 1115      |
+| 11223349 | Anton Sinaga  | Jl. Merauke    | Cikarang | 12346   | 08967812356 | Laki-Laki    | 1988-03-10   | 1116      |
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> update mahasiswa
+    -> set TanggalLahir = "1979-08-31"
+    -> where Nim = "11223344";
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from mahasiswa
+    -> where Nama = "Ari Santoso";
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama        | AlamatJalan    | Kota   | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso | Jl. Kalimantan | Bekasi | 12345   | 08123456789 | Laki-Laki    | 1979-08-31   | 1111      |
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> delete from mahasiswa where Nama = "Dina Marlina";
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from mahasiswa
+    -> where TanggalLahir >= "1996-01-02"
+    -> order by Nama;
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama       | AlamatJalan | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223345 | Ario Talib | Jl. Irian   | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
+| 11223347 | Lisa Ayu   | Jl. Jawa    | Bekasi   | 12345   | 08765432112 | Perempuan    | 1996-01-02   | 1114      |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from mahasiswa
+    -> where Kota = "Bekasi"
+    -> and JenisKelamin = "Perempuan";
++----------+---------------+-------------+--------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama          | AlamatJalan | Kota   | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+--------+---------+-------------+--------------+--------------+-----------+
+| 11223347 | Lisa Ayu      | Jl. Jawa    | Bekasi | 12345   | 08765432112 | Perempuan    | 1996-01-02   | 1114      |
+| 11223348 | Tiara Wahidah | Jl. Kediri  | Bekasi | 12345   | 08912387634 | Perempuan    | 1980-02-05   | 1115      |
++----------+---------------+-------------+--------+---------+-------------+--------------+--------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from mahasiswa
+    -> where Kota = "Bekasi"
+    -> and JenisKelamin = "Laki-Laki";
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama        | AlamatJalan    | Kota   | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso | Jl. Kalimantan | Bekasi | 12345   | 08123456789 | Laki-Laki    | 1979-08-31   | 1111      |
++----------+-------------+----------------+--------+---------+-------------+--------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from mahasiswa
+    -> where Kota = "Bekasi"
+    -> and JenisKelamin = "Laki-Laki"
+    -> Or TanggalLahir Between "1998-03-10" And "1999-11-16" and JenisKelamin <> "Perempuan";
++----------+-------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama        | AlamatJalan    | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+-------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso | Jl. Kalimantan | Bekasi   | 12345   | 08123456789 | Laki-Laki    | 1979-08-31   | 1111      |
+| 11223345 | Ario Talib  |  Jl. Irian     | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
++----------+-------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+2 rows in set (0.05 sec)
+
+mysql> select Nama, AlamatJalan from mahasiswa;
++---------------+----------------+
+| Nama          | AlamatJalan    |
++---------------+----------------+
+| Ari Santoso   | Jl. Kalimantan |
+| Ario Talib    | Jl. Irian      |
+| Lisa Ayu      | Jl. Jawa       |
+| Tiara Wahidah | Jl. Kediri     |
+| Anton Sinaga  | Jl. Merauke    |
++---------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from mahasiswa
+    -> order by Nama ASC;
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama          | AlamatJalan    | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223349 | Anton Sinaga  | Jl. Merauke    | Cikarang | 12346   | 08967812356 | Laki-Laki    | 1988-03-10   | 1116      |
+| 11223344 | Ari Santoso   | Jl. Kalimantan | Bekasi   | 12345   | 08123456789 | Laki-Laki    | 1979-08-31   | 1111      |
+| 11223345 | Ario Talib    | Jl. Irian      | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
+| 11223347 | Lisa Ayu      | Jl. Jawa       | Bekasi   | 12345   | 08765432112 | Perempuan    | 1996-01-02   | 1114      |
+| 11223348 | Tiara Wahidah | Jl. Kediri     | Bekasi   | 12345   | 08912387634 | Perempuan    | 1980-02-05   | 1115      |
++----------+---------------+----------------+----------+---------+-------------+--------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+PERTANYAAN
+Perbedaan penggunaan BETWEEN dan penggunaan operator >= dan <=
+
+
+mysql> SELECT * FROM MAHASISWA
+    -> where TanggalLahir between "1998-03-10" and "1999-11-16";
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama       | AlamatJalan | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223345 | Ario Talib |  Jl. Irian  | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select *from mahasiswa
+    -> where TanggalLahir >= "1998-03-10" and TanggalLahir <= "1999-11-16";
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| Nim      | Nama       | AlamatJalan | Kota     | KodePos | NoHp        | JenisKelamin | TanggalLahir | KodeDosen |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+| 11223345 | Ario Talib |  Jl. Irian  | Cikarang | 12346   | 08912332112 | Laki-Laki    | 1999-11-16   | 1112      |
++----------+------------+-------------+----------+---------+-------------+--------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+Dari 2 Cara Di atas dapat disimpulkan Bahwa  penggunaan BETWEEN dan penggunaan operator >= dan <= Hasil yang di tampilkan Sama saja
+•	
