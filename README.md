@@ -1,2 +1,4 @@
-# praktikum-3-SQL-part-2
-Insert, update, delete and celect
+Tugas Database
+Panji Lio Reno Saputro
+TI.17.D1
+311710217
